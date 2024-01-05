@@ -1,0 +1,39 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /huangli-web/api
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  application:
+    name: huangli-web
+  aop:
+    proxy-target-class: true
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+
+
+  datasource:
+    druid:
+      url: jdbc:mysql://127.0.0.1:3306/huangli-test-db?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      driver-class-name: com.mysql.jdbc.Driver
+      username: root
+      password: bsoft
+# 日志配置
+logging:
+  level:
+    io.undertow: error
+    org.mybatis: debug
+    com.baomidou: debug
+    org.slf4j: debug
+    org.springframework: warn
+    com.huangli.web: debug
+
+# MyBatis Plus配置
+mybatis-plus:
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:**/*Mapper.xml

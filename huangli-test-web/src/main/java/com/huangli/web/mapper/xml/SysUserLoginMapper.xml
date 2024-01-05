@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huangli.web.mapper.SysUserLoginMapper">
+
+    <resultMap id="BaseResultMap" type="com.huangli.web.domain.SysUserLogin">
+            <id property="id" column="id" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="loginName" column="login_name" jdbcType="VARCHAR"/>
+            <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+            <result property="fgActive" column="fg_active" jdbcType="VARCHAR"/>
+            <result property="revision" column="revision" jdbcType="VARCHAR"/>
+            <result property="createdBy" column="created_by" jdbcType="VARCHAR"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedBy" column="updated_by" jdbcType="VARCHAR"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,password,login_name,
+        user_name,fg_active,revision,
+        created_by,created_time,updated_by,
+        updated_time
+    </sql>
+    <select id="selectSingleByLoginName" resultType="com.huangli.web.domain.SysUserLogin">
+        select <include refid="Base_Column_List" />
+        from sys_user_login
+        where fg_active = '1' and login_name = #{loginName}
+    </select>
+</mapper>
