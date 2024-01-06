@@ -10,8 +10,10 @@ import com.huangli.web.exception.BusinessException;
 import com.huangli.web.mapper.SysUserLoginMapper;
 import com.huangli.web.service.UserLoginService;
 import com.huangli.web.utils.BaseEntityUtils;
+import com.huangli.web.utils.ExpireData;
 import com.huangli.web.utils.S;
 import com.huangli.web.vo.BaseLoginVO;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -45,10 +47,29 @@ public class UserLoginServiceImpl implements UserLoginService {
         if (ObjectUtil.isNull(loginUser) || !S.isEq(loginUser.getPassword(), loginVO.getPassword())) {
             throw new BusinessException("用户名或密码错误，登录失败！");
         }
-        // 3 生成登录成功秘钥
+        // 3 生成登录成功秘钥, 并将其加入登录缓存
+        String token = SecureUtil.md5(loginUser.getId() + loginUser.getLoginName());
+        UserCache.LOGIN_USER.put(token, new ExpireData<SysUserLogin>(loginUser, UserCache.DEFAULT_USER_EXPIRE_TIME));
         Map<String, Object> retMap = new HashMap<>();
-        // TODO：暂时生成虚假id，后续优化
-        retMap.put("token", SecureUtil.simpleUUID());
+        retMap.put("token", token);
         return retMap;
+    }
+    /**
+     * 用户注销
+     * @Author liuxb
+     * @param: token
+     * @Return void
+     * @Date 2024/1/6
+     **/
+    @Override
+    public void logout(String token) {
+        if (S.isBlank(token)) {
+            throw new BusinessException("当前用户未登录，无需注销！");
+        }
+        ExpireData<SysUserLogin> loginExpireData = UserCache.LOGIN_USER.get(token);
+        if (ObjectUtil.isNull(loginExpireData)) {
+            throw new BusinessException("当前用户未登录，无需注销！");
+        }
+        UserCache.LOGIN_USER.remove(token);
     }
 }

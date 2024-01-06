@@ -20,4 +20,13 @@ public interface UserLoginService {
      * @Date 2024/1/5
      **/
     Map<String, Object> login(BaseLoginVO loginVO);
+
+    /**
+     * 用户注销
+     * @Author liuxb
+     * @param: token
+     * @Return void
+     * @Date 2024/1/6
+     **/
+    void logout(String token);
 }

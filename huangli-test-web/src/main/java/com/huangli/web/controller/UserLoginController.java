@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import sun.security.provider.MD5;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +42,19 @@ public class UserLoginController {
     @PostMapping("/login")
     public BaseResponse login(@Validated @RequestBody BaseLoginVO loginVO) {
         return BaseResponse.success(loginService.login(loginVO));
+    }
+    /**
+     * 用户登出
+     * @Author liuxb
+     * @param: loginVO
+     * @Return com.huangli.web.vo.BaseResponse
+     * @Date 2024/1/5
+     **/
+    @ApiOperation("用户登出")
+    @PostMapping("/logout")
+    public BaseResponse logout(HttpServletRequest request) {
+        loginService.logout(request.getHeader("X-Token"));
+        return BaseResponse.success();
     }
 
     /**

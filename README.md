@@ -11,12 +11,13 @@
 
 ### 后端结构
 
-![image-20240105231038641](./images/image-20240105231038641.png)
+![image-20240106100818913](./images/image-20240106100818913.png)
 
 后端结构如下：
 
+- aspect：简单登录权限校验
 - cache：为登录缓存，未引入缓存中间价，所以暂且使用map作为登录用户的缓存
-- config：一些springboot、swagger等的配置文件
+- config：一些springboot、swagger、全局异常处理器等的配置类
 - Controller：接口层代码
 - domain：实体类代码
 - exception：公共业务异常

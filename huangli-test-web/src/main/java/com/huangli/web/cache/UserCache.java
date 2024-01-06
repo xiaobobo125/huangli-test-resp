@@ -1,5 +1,8 @@
 package com.huangli.web.cache;
 
+import com.huangli.web.domain.SysUserLogin;
+import com.huangli.web.utils.ExpireData;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -11,9 +14,13 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class UserCache {
     /**
-     * 用户登录次数记录缓存
+     * 用户默认过期时间: 15分钟
+     **/
+    public static Long DEFAULT_USER_EXPIRE_TIME = 15 * 60L;
+    /**
+     * 已登录用户
      * @Author liuxb
      * @Date 2024/1/5
      **/
-    public static ConcurrentHashMap<String, Integer> LOGIN_CNT_CACHE = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<String, ExpireData<SysUserLogin>> LOGIN_USER = new ConcurrentHashMap<>();
 }
